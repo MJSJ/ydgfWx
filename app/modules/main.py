@@ -13,6 +13,10 @@ class MainHandler(main):
     def get(self):
         self.write("None")
 
+class NotFoundHandler(main):
+    def get(self):
+        self.write("Sorry, Page not Found.. Go <a href=\"/\">back</a>")
+
 url_prefix = ''
 
 urls = [
