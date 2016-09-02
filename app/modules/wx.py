@@ -12,15 +12,19 @@ class CheckHandler(wx):
     yf: 认证公众号
     '''
     def get(self):
+        pass
+    def post(self):
         _token = "sohuweixin"
         sn = self.get_argument('signature', '')
         es = self.get_argument('echostr', '')
         a = ''.join(str(i) for i in sorted([_token, self.get_argument('timestamp', 't'), self.get_argument('nonce', 'n')]))
-        
+
         if str(hashlib.sha1(a).hexdigest()) == str(sn):
             self.write(es)
         else:
-            self.write("认证失败")
+            l.info("fail access")
+    def check_xsrf_cookie(self):
+        pass
 
 class AjaxHandler(wx):
     '''
