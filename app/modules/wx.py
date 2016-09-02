@@ -35,13 +35,13 @@ class AjaxHandler(wx):
     def check_xsrf_cookie(self):
         pass
 
-class NotFoundHandler(pub):
+class NotFoundHandler(wx):
     def get(self):
         self.write("Sorry, Page not Found.. Go <a href=\"/\">back</a>")
 
 url_prefix = '/wx'
 
 urls = [
-    ('/?', CheckHandler),
+    ('?', CheckHandler),
     ('/ajax?', AjaxHandler)
 ]
