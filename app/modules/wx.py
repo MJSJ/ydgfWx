@@ -1,6 +1,7 @@
 # encoding: utf-8
 from app.modules import base
 import logging as l
+import hashlib
 
 class wx(base):
     def render(self, template_name, **kwargs):
@@ -11,11 +12,20 @@ class CheckHandler(wx):
     yf: 认证公众号
     '''
     def get(self):
+        if hasattr(self.application, "_token") == False:
+            self.setToken()
+            self.application._tokenEx = self.timest()
+        else:
+            if self.timest() - self.application._tokenEx > 7200:
+                self.setToken()
+                self.application._tokenEx = self.timest()
+            else:
+                pass
+        _token = self.application._token
         sn = self.get_argument('signature', '')
         es = self.get_argument('echostr', '')
-        _token = '1q2w3e4r'
         a = ''.join(str(i) for i in sorted([_token, self.get_argument('timestamp', 't'), self.get_argument('nonce', 'n')]))
-        import hashlib
+        
         if str(hashlib.sha1(a).hexdigest()) == str(sn):
             self.write(es)
         else:

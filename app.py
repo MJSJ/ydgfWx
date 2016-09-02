@@ -54,7 +54,7 @@ class Application(tornado.web.Application):
         自动装载各module 的网址
         '''
         handler_list = []
-        files = os.listdir(os.path.dirname(__file__)+'/app/modules/')
+        files = os.listdir(os.path.dirname(__file__)+'./app/modules/')
         files.sort()
         for f in files:
             if f.startswith("_"): # Filter __init__.py
@@ -82,7 +82,7 @@ class Application(tornado.web.Application):
 
 if __name__ == "__main__":
     # tornado.locale.load_translations(os.path.join(options.run_path, "locale"))
-    tornado.options.parse_config_file(os.path.dirname(__file__)+'/app/config.conf')
+    tornado.options.parse_config_file(os.path.dirname(__file__)+'./app/config.conf')
     tornado.options.parse_command_line()
     app = Application()
     if options.debug:

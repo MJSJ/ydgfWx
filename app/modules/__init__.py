@@ -7,11 +7,12 @@
     Copyright (c) 2013 yufeng All rights reserved.
 """
 import tornado.web
-import tornado.web, hmac, hashlib, datetime, json #, functools, urllib, os
+import tornado.web, hmac, hashlib, datetime, json, time #, functools, urllib, os
 from tornado.escape import json_decode
 from tornado import escape
 import decimal
 import logging as l
+import urllib, urllib2, json, hashlib
 
 def _default(obj):
     if isinstance(obj, datetime.datetime):
@@ -70,3 +71,18 @@ class base(tornado.web.RequestHandler):
     @property
     def now(self):
         return datetime.datetime.now()
+
+    def timest(self):
+        return time.time()
+
+    def setToken(self):
+        url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx872cc0c563eaff04&secret=009600ff4d8cce915f071b1ac202c22f"
+        req = urllib2.Request(url)
+        res_data = urllib2.urlopen(req)
+        res = res_data.read()
+        json_acceptable_string = res.replace("'", "\"")
+        d = json.loads(json_acceptable_string)
+        if d["access_token"] is not None:
+            self.application._token = d["access_token"]
+        else:
+            self.application._token = ""
