@@ -37,6 +37,11 @@ class AjaxHandler(wx):
     def check_xsrf_cookie(self):
         pass
 
+class WebHandler(wx):
+    def get(self):
+        l.info(self.request.headers)
+        l.info(self.json_decode(self.request.body))
+
 class NotFoundHandler(wx):
     def get(self):
         self.write("Sorry, Page not Found.. Go <a href=\"/\">back</a>")
@@ -45,5 +50,6 @@ url_prefix = '/wx'
 
 urls = [
     ('?', CheckHandler),
-    ('/ajax?', AjaxHandler)
+    ('/ajax?', AjaxHandler),
+    ('/web', WebHandler)
 ]
