@@ -19,7 +19,7 @@ class CheckHandler(wx):
         if str(hashlib.sha1(a).hexdigest()) == str(sn):
             self.write(es)
         else:
-            self.write("false")
+            self.write("认证失败")
 
 class AjaxHandler(wx):
     '''
