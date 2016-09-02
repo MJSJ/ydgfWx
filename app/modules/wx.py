@@ -12,16 +12,6 @@ class CheckHandler(wx):
     yf: 认证公众号
     '''
     def get(self):
-        if hasattr(self.application, "_token") == False:
-            self.setToken()
-            self.application._tokenEx = self.timest()
-        else:
-            if self.timest() - self.application._tokenEx > 7200:
-                self.setToken()
-                self.application._tokenEx = self.timest()
-            else:
-                pass
-        # self.application._token
         _token = "sohuweixin"
         sn = self.get_argument('signature', '')
         es = self.get_argument('echostr', '')
@@ -37,6 +27,7 @@ class AjaxHandler(wx):
     yf: 公众号请求
     '''
     def get(self):
+        self.check_tocken()
         self.write(self.getU())
 
     def post(self):
