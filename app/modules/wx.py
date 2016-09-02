@@ -21,7 +21,8 @@ class CheckHandler(wx):
                 self.application._tokenEx = self.timest()
             else:
                 pass
-        _token = self.application._token
+        # self.application._token
+        _token = "sohuweixin"
         sn = self.get_argument('signature', '')
         es = self.get_argument('echostr', '')
         a = ''.join(str(i) for i in sorted([_token, self.get_argument('timestamp', 't'), self.get_argument('nonce', 'n')]))
