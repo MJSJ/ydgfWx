@@ -86,3 +86,12 @@ class base(tornado.web.RequestHandler):
             self.application._token = d["access_token"]
         else:
             self.application._token = ""
+
+    def getU(self):
+        url = "https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token=" + self.application._token
+        req = urllib2.Request(url)
+        res_data = urllib2.urlopen(req)
+        res = res_data.read()
+        json_acceptable_string = res.replace("'", "\"")
+        d = json.loads(json_acceptable_string)
+        return d

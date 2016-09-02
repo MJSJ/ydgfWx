@@ -37,7 +37,7 @@ class AjaxHandler(wx):
     yf: 公众号请求
     '''
     def get(self):
-        pass
+        self.write(self.getU())
 
     def post(self):
         l.info(self.request.headers)
