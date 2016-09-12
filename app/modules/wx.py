@@ -1,7 +1,7 @@
 # encoding: utf-8
 from app.modules import base
 import logging as l
-import hashlib
+import hashlib, json
 
 class wx(base):
     def render(self, template_name, **kwargs):
@@ -9,10 +9,44 @@ class wx(base):
 
 class CheckHandler(wx):
     '''
-    yf: 认证公众号
+    yf: 网页授权获取用户基本信息
     '''
     def get(self):
-        pass
+        u = self.get_secure_cookie("u", None)
+        path = self.get_argument('path', '')
+        if u is None: # 2天内未在此设备上认证 或 重新登录了微信客户端
+            code = self.get_argument('code', '')
+            access_token = self.get_access_token(code)
+            if 'errcode' in access_token:
+                self.write('<h1>认证失败</h1>')
+                return
+            user = self.get_web_user(access_token)
+            ud = self.db.client(openid=user['openid'], unionid=user['unionid']).one()
+            if ud:
+                self.set_secure_cookie("u", str(ud.id), expires_days=2)
+                pass
+            else:
+                data = {
+                    "openid": user['openid'],
+                    "unionid": user['unionid'],
+                    "nickname": user['nickname'],
+                    "sex": user['sex'],
+                    "province": user['province'],
+                    "city": user['city'],
+                    "country": user['country'],
+                    "headimgurl": user['headimgurl']
+                }
+                newu = self.db.client.add(**data)
+                if newu:
+                    self.set_secure_cookie("u", str(newu), expires_days=2)
+                else:
+                    self.write("Error!")
+        self.redirect(path)
+        return
+
+    '''
+    yf: 认证公众号
+    '''
     def post(self):
         _token = "sohuweixin"
         sn = self.get_argument('signature', '')
