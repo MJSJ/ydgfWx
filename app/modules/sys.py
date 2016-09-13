@@ -22,7 +22,7 @@ class LoginHandler(sys):
     yf: 后台登录
     '''
     def get(self):
-        self.render('demo.html')
+        self.render('base.html')
 
 class NotFoundHandler(sys):
     def get(self):
