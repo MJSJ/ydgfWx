@@ -4,7 +4,7 @@ import logging as l
 
 class sys(base):
     def render(self, template_name, **kwargs):
-        super(sys, self).render(template_name, **kwargs)
+        super(sys, self).render('sys/'+template_name, **kwargs)
 
 class SystemHandler(sys):
     '''
