@@ -9,6 +9,8 @@
 __pycache__/
 assets/node_modules/
 app/config.conf
+app/utils/db.py
 conf/nginx.conf
 conf/robots.txt
 app.py
+.gitignore
