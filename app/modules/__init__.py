@@ -30,10 +30,10 @@ class base(tornado.web.RequestHandler):
         return self.application.db
 
     def get_current_user(self):
-        uid = self.get_secure_cookie("u")
-        u = self.db.user(id=uid).one()
-        if u:
-            return self.get_secure_cookie("u")
+        # uid = self.get_secure_cookie("u")
+        # u = self.db.user(id=uid).one()
+        # if u:
+        #     return self.get_secure_cookie("u")
         return None
 
     def write(self, chunk):

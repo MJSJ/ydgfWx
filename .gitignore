@@ -14,3 +14,5 @@ conf/nginx.conf
 conf/robots.txt
 app.py
 .gitignore
+
+node_modules/
