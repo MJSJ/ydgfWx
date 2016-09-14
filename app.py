@@ -11,7 +11,7 @@ import tornado.process
 import tornado.web
 from tornado.options import options, define
 
-# from app.utils import db
+from app.utils import db
 
 define('mysql_database', default="test")
 define('mysql_host', default="localhost")
@@ -41,11 +41,19 @@ class Application(tornado.web.Application):
             'xsrf_cookies': options.xsrf_cookies,
             'compiled_template_cache': False
         }
+        session_settings = dict(
+            driver="file",
+            driver_settings=dict(
+                host="#_sessions",
+            ),
+            force_persistence=True,
+        )
+        settings.update(session=session_settings)
         super(Application, self).__init__(self.build_urls, **settings)
-        self.db = None
-        # self.db = db.DB(
-        #     host=options.mysql_host, database=options.mysql_database,
-        #     user=options.mysql_user, password=options.mysql_password)
+
+        self.db = db.DB(
+            host=options.mysql_host, database=options.mysql_database,
+            user=options.mysql_user, password=options.mysql_password)
 
     @property
     def build_urls(self):
