@@ -42,7 +42,6 @@ class Application(tornado.web.Application):
             'compiled_template_cache': False
         }
         super(Application, self).__init__(self.build_urls, **settings)
-        # self.db = None
         self.db = db.DB(
             host=options.mysql_host, database=options.mysql_database,
             user=options.mysql_user, password=options.mysql_password)

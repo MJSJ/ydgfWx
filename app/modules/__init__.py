@@ -36,6 +36,10 @@ class base(tornado.web.RequestHandler):
             return self.get_secure_cookie("u")
         return None
 
+    def translate(self, chunk):
+        chunk = json.dumps(chunk, default=_default).replace('</', "<\\/")
+        return escape.utf8(chunk)
+
     def write(self, chunk):
         if isinstance(chunk, dict):
             cb = self.get_argument("callback", None)
