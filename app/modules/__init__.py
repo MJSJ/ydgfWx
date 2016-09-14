@@ -13,6 +13,7 @@ from tornado import escape
 import decimal
 import logging as l
 import urllib, urllib2, json, hashlib
+from torndsession.sessionhandler import SessionBaseHandler
 
 def _default(obj):
     if isinstance(obj, datetime.datetime):
@@ -24,7 +25,7 @@ def _default(obj):
     else:
         return obj
 
-class base(tornado.web.RequestHandler):
+class base(SessionBaseHandler):
     @property
     def db(self):
         return self.application.db

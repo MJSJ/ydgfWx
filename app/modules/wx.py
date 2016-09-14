@@ -12,9 +12,10 @@ class CheckHandler(wx):
     yf: 网页授权获取用户基本信息
     '''
     def get(self):
-        u = self.get_secure_cookie("c", None)
         path = self.get_argument('path', '')
-        if u is None: # 2天内未在此设备上认证 或 重新登录了微信客户端
+        if 'c' in self.session:
+            pass
+        else: # session 不存在
             code = self.get_argument('code', '')
             access_token = self.get_access_token(code)
             if 'errcode' in access_token:
@@ -22,10 +23,9 @@ class CheckHandler(wx):
                 return
             user = self.get_web_user(access_token)
             ud = self.db.client(openid=user['openid'], unionid=user['unionid']).one()
-            if ud:
-                self.set_secure_cookie("c", str(ud.id), expires_days=2)
-                pass
-            else:
+            if ud: # 已经入库的用户
+                self.session["c"] = ud
+            else: # 从未授权的用户
                 data = {
                     "openid": user['openid'],
                     "unionid": user['unionid'],
@@ -38,9 +38,10 @@ class CheckHandler(wx):
                 }
                 newu = self.db.client.add(**data)
                 if newu:
-                    self.set_secure_cookie("c", str(newu), expires_days=2)
+                    self.session["c"] = data
                 else:
-                    self.write("Error!")
+                    self.write("Server Error!")
+                    return
         self.redirect(path)
         return
 

@@ -1,8 +1,8 @@
 # encoding: utf-8
-from torndsession.sessionhandler import SessionBaseHandler
+from app.modules import base
 import logging as l
 
-class ydgf(SessionBaseHandler):
+class ydgf(base):
     def render(self, template_name, **kwargs):
         super(ydgf, self).render('app/'+template_name, **kwargs)
 
@@ -31,6 +31,7 @@ class HomeHandler(ydgf):
             self.render('base.html', cli=script)
         else:
             self.render('base.html', cli="window.user = null")
+
 class NotFoundHandler(ydgf):
     def get(self):
         self.write("Sorry, Page not Found.. Go <a href=\"/\">back</a>")
