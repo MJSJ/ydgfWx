@@ -41,14 +41,6 @@ class Application(tornado.web.Application):
             'xsrf_cookies': options.xsrf_cookies,
             'compiled_template_cache': False
         }
-        session_settings = dict(
-            driver="file",
-            driver_settings=dict(
-                host="#_sessions",
-            ),
-            force_persistence=True,
-        )
-        settings.update(session=session_settings)
         super(Application, self).__init__(self.build_urls, **settings)
 
         self.db = db.DB(

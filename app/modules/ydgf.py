@@ -10,6 +10,7 @@ class ydgf(SessionBaseHandler):
         if "c" in self.session:
             return self.session["c"]
         else:
+            self.session["c"] = { 'id': 1, 'nickname': 'zyf', 'city': '海淀', 'province': '北京', 'country': '中国', 'score': 0, 'gold': 0 } # 这里制作假session
             return None
 
 class HomeHandler(ydgf):
@@ -17,7 +18,6 @@ class HomeHandler(ydgf):
     yf: 首页
     '''
     def get(self):
-        self.session["c"] = { 'id': 1, 'nickname': 'zyf', 'city': '海淀', 'province': '北京', 'country': '中国', 'score': 0, 'gold': 0 } # 这里制作假session
         c = self.current_user
         if c:
             script = "window.user = {" + \
