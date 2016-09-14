@@ -38,30 +38,35 @@ class LA extends React.Component {
 
         return (
     	<div>
-    		<label>name</label>
-            <input value={window.user.nickname}/>
+    		<label>{this.props.kk}</label>
+            <input value={this.props.vv}/>
         </div>
         );
     }
 }
-
+// window.user = {id: '1',gold: '0',score: '0',nickname: 'zyf',province: '北京',city: '海淀',country: '中国'}
 
 
 
 
 export default class Home extends React.Component {
-	// renderItem(){
-	// 	// return (
+	renderItem(){
+		var user = window.user;
+		var results = [];
 
-	// 	// )
-	// },
+		for(let i in user){
+			results.push (<LA kk={i} vv={user[i]} key={i}></LA>);
+		
+		}
+		return results;
+	}
   
   	render(){
   		return(
 		    <Page className="home" title="WeUI" subTitle="为微信Web服务量身设计">
                 <h1>welcome:</h1>
-                <LA />
-
+              		{this.renderItem()}
+		
             </Page>
   		)
   	}
