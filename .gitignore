@@ -7,7 +7,6 @@
 *.pyc
 .idea/*
 __pycache__/
-#_sessions
 assets/node_modules/
 app/config.conf
 app/utils/db.py
