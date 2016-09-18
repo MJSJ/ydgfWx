@@ -3,12 +3,24 @@
 	<head>
 		<meta charset="utf-8">
 		 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-		<title>hello</title>
-	<link href="../assets/css/index.css" rel="stylesheet"></head>
+		<title>公众号后台</title>
+		<link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.css" rel="stylesheet">
+		<link href="http://apps.bdimg.com/libs/bootstrap-glyphicons/1.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+		<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<!--[if lt IE 9]>
+			<script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
 	<body>
-		<script type="text/javascript" src="http://news.sohu.com/upload/ky/resloader.js"></script>
-
-		<div id="app"></div>
-		<script src="{{ static_url('js/index.js') }}"></script>
+		<div class="main">{% block sys %}  {% end %}</div>
+		<style>
+		.main{
+			width: 1000px;
+			min-height: 500px;
+			margin: 100px auto;
+		}
+		</style>
 	</body>
 </html>

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block sys %}
+<div class="menu col-lg-3">
+    <ul id="menu" class="nav nav-pills nav-stacked nav-pills-stacked-example" data-active="{{active}}">
+        <li class="guess-edit" role="presentation">
+            <a href="/sys/guess/add"><i class="glyphicon glyphicon-question-sign"></i>编辑竞猜</a>
+        </li>
+        <li class="guess" role="presentation">
+            <a href="/sys/guess/list"><i class="glyphicon glyphicon-calendar"></i>竞猜列表</a>
+        </li>
+    </ul>
+</div>
+<div class="content col-lg-9">
+    {% block content %}{% end %}
+</div>
+<style type="text/css">
+    .nav-pills li{
+        font-size: 15px;
+    }
+    .nav-pills i{
+        width: 22px;
+        height: 22px;
+        line-height: 22px;
+        font-size: 15px;
+    }
+    .content{
+        background-color: #f9f9f9;
+        padding: 50px;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function (){
+        $("."+$("#menu").attr("data-active")).addClass("active");
+    });
+</script>
+{% end %}

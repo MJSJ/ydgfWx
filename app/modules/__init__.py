@@ -31,11 +31,7 @@ class base(SessionBaseHandler):
         return self.application.db
 
     def get_current_user(self):
-        uid = self.get_secure_cookie("u")
-        u = self.db.user(id=uid).one()
-        if u:
-            return self.get_secure_cookie("u")
-        return None
+        return self.get_secure_cookie("u")
 
     def translate(self, chunk):
         chunk = json.dumps(chunk, default=_default).replace('</', "<\\/")
