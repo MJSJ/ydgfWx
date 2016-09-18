@@ -61,7 +61,9 @@ class AuthHandler(wx):
                     "province": user['province'],
                     "city": user['city'],
                     "country": user['country'],
-                    "headimgurl": user['headimgurl']
+                    "headimgurl": user['headimgurl'],
+                    "gold": 0,
+                    "score": 0
                 }
                 newu = self.db.client.add(**data)
                 if newu:
