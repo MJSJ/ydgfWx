@@ -10,7 +10,6 @@ class ydgf(base):
         if "c" in self.session:
             return self.session["c"]
         else:
-            self.session["c"] = {'id': 1, 'nickname': 'zyf', 'city': '海淀', 'province': '北京', 'country': '中国', 'score': 0, 'gold': 0 } # 这里制作假session
             return None
 
 class HomeHandler(ydgf):
