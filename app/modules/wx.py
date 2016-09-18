@@ -65,6 +65,7 @@ class AuthHandler(wx):
                 }
                 newu = self.db.client.add(**data)
                 if newu:
+                    data["id"] = newu
                     self.session["c"] = data
                 else:
                     self.write("Server Error!")
