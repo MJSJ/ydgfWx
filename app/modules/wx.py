@@ -9,7 +9,7 @@ class wx(base):
 
 class CheckHandler(wx):
     '''
-    yf: 认证公众号
+    yf: 服务器认证公众号
     '''
     def get(self):
         _token = "sohuweixin"

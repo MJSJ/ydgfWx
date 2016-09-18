@@ -24,6 +24,7 @@ class HomeHandler(ydgf):
                 "gold: '"+str(c['gold'])+"'," + \
                 "score: '"+str(c['score'])+"'," + \
                 "nickname: '"+c['nickname']+"'," + \
+                "headimgurl: '"+c['headimgurl']+"'," + \
                 "province: '"+c['province']+"'," + \
                 "city: '"+c['city']+"'," + \
                 "country: '"+c['country']+"'}"
