@@ -9,6 +9,33 @@ class wx(base):
 
 class CheckHandler(wx):
     '''
+    yf: 认证公众号
+    '''
+    def get(self):
+        _token = "sohuweixin"
+        sn = self.get_argument('signature', '')
+        es = self.get_argument('echostr', '')
+        a = ''.join(str(i) for i in sorted([_token, self.get_argument('timestamp', 't'), self.get_argument('nonce', 'n')]))
+
+        if str(hashlib.sha1(a).hexdigest()) == str(sn):
+            self.write(es)
+        else:
+            l.info("fail access")
+    def post(self):
+        _token = "sohuweixin"
+        sn = self.get_argument('signature', '')
+        es = self.get_argument('echostr', '')
+        a = ''.join(str(i) for i in sorted([_token, self.get_argument('timestamp', 't'), self.get_argument('nonce', 'n')]))
+
+        if str(hashlib.sha1(a).hexdigest()) == str(sn):
+            self.write(es)
+        else:
+            l.info("fail access")
+    def check_xsrf_cookie(self):
+        pass
+
+class AuthHandler(wx):
+    '''
     yf: 网页授权获取用户基本信息
     '''
     def get(self):
@@ -45,22 +72,6 @@ class CheckHandler(wx):
         self.redirect(path)
         return
 
-    '''
-    yf: 认证公众号
-    '''
-    def post(self):
-        _token = "sohuweixin"
-        sn = self.get_argument('signature', '')
-        es = self.get_argument('echostr', '')
-        a = ''.join(str(i) for i in sorted([_token, self.get_argument('timestamp', 't'), self.get_argument('nonce', 'n')]))
-
-        if str(hashlib.sha1(a).hexdigest()) == str(sn):
-            self.write(es)
-        else:
-            l.info("fail access")
-    def check_xsrf_cookie(self):
-        pass
-
 class AjaxHandler(wx):
     '''
     yf: 公众号请求
@@ -84,5 +95,6 @@ url_prefix = '/wx'
 
 urls = [
     ('?', CheckHandler),
+    ('/auth?', AuthHandler),
     ('/ajax?', AjaxHandler)
 ]
