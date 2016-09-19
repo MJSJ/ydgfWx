@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="col-md-6 col-md-offset-3">
-    <form action="/guess/add" id="addgueForm" method="post">
+    <form action="/reasearch/add" id="addreaForm" method="post">
         <div class="form-group">
             <label>标题</label>
             <input type="text" class="form-control" name="title" required>
@@ -17,10 +17,6 @@
                     <button id="add-section" class="btn btn-default" type="button">添加</button>
                 </span>
             </div>
-        </div>
-        <div class="form-group">
-            <label>答案</label>
-            <div class="radio radiokey"></div>
         </div>
         <div class="form-group">
             <label>有效期</label>
@@ -41,13 +37,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label>参与积分</label>
-            <div class="input-group">
-                <input type="number" class="form-control" name="score" value="0" required min="0">
-                <span class="input-group-addon">分</span>
-            </div>
-        </div>
-        <div class="form-group">
             <label>奖励积分</label>
             <div class="input-group">
                 <input type="number" class="form-control" name="reward_score" value="0" required min="0">
@@ -62,21 +51,12 @@
 $(document).ready(function (){
     var totalsec = 0;
 
-    function radiohtml(){
-        var _html = '';
-        for(var i =1; i<= totalsec; i++){
-            _html += '<label><input type="radio" name="key" value="'+(i-1)+'"> 选项 '+i+ ' </label>';
-        }
-        $(".radiokey").html(_html);
-    }
-
     $("#add-section").on("click", function (e){
         var _html = $("#sections").html();
         totalsec ++;
         _html += '<div class="input-group"><input type="text" id="sec-'+totalsec+'" class="form-control" value="'+$("#section").val()+'" /> <span class="input-group-btn"> <button class="btn btn-warning" id="sec-mv-'+totalsec+'" type="button">移除</button> </span></div>';
         $("#sections").html(_html);
         $("#section").val("");
-        radiohtml();
     });
 
     $("#sections").on("click", "button", function (e){
@@ -86,13 +66,11 @@ $(document).ready(function (){
             $(this).find('input').attr("id", "sec-"+(i+1));
             $(this).find('button').attr("id", "sec-mv-"+(i+1));
         });
-        radiohtml();
     });
 
-    $("#addgueForm").submit(function (e){
+    $("#addreaForm").submit(function (e){
         var validl = $.validLength($("input[name=title]").val().length, 20) &&
-                    $.validLength($("input[name=expires]").val().length, 2) &&
-                    $("input[name=key]:checked").length == 1;
+                    $.validLength($("input[name=expires]").val().length, 2);
 
         var _cols = "";
         $("#sections .input-group").each(function (i){
@@ -108,13 +86,13 @@ $(document).ready(function (){
         else{
             $("#cols").attr("value", _cols);
             $.ajax({
-                url: '/sys/guess/add',
+                url: '/sys/research/add',
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function (r){
                     if(r.status == 1){
                         alert("操作成功");
-                        window.location.href = "/sys/guess/list"
+                        window.location.href = "/sys/research/list"
                     }
                 }
             });

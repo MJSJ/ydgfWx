@@ -1,20 +1,57 @@
 {% extends "base.html" %}
 
 {% block sys %}
-<div class="menu col-lg-3">
-    <ul id="menu" class="nav nav-pills nav-stacked nav-pills-stacked-example" data-active="{{active}}">
-        <li class="guess-edit" role="presentation">
-            <a href="/sys/guess/add"><i class="glyphicon glyphicon-question-sign"></i>编辑竞猜</a>
+<script type="text/javascript">
+    $.extend({
+        validLength: function (val, l){
+            return val <= l;
+        }
+    });
+    $.fn.extend(function (){
+
+    });
+</script>
+<div class="menu col-lg-2">
+    <ul id="menu" class="nav nav-pills nav-stacked" data-active="{{active}}">
+        <li>
+            <a href="#"><i class="glyphicon glyphicon-question-sign"></i>竞猜管理</a>
+            <ul class="sub-nav">
+                <li class="guess-edit">
+                    <a href="/sys/guess/add">添加竞猜</a>
+                </li>
+                <li class="guess-list">
+                    <a href="/sys/guess/list">竞猜列表</a>
+                </li>
+            </ul>
         </li>
-        <li class="guess" role="presentation">
-            <a href="/sys/guess/list"><i class="glyphicon glyphicon-calendar"></i>竞猜列表</a>
+        <li>
+            <a href="#"><i class="glyphicon glyphicon-signal"></i>调查管理</a>
+            <ul class="sub-nav">
+                <li class="research-edit">
+                    <a href="/sys/research/add">添加调查</a>
+                </li>
+                <li class="research-list">
+                    <a href="/sys/research/list">调查列表</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#"><i class="glyphicon glyphicon-user"></i>客户管理</a>
+            <ul class="sub-nav">
+                <li class="client-list">
+                    <a href="/sys/guess/list">用户列表</a>
+                </li>
+            </ul>
         </li>
     </ul>
 </div>
-<div class="content col-lg-9">
+<div class="content col-lg-10">
     {% block content %}{% end %}
 </div>
 <style type="text/css">
+    a{
+        color: #888;
+    }
     .nav-pills li{
         font-size: 15px;
     }
@@ -27,6 +64,25 @@
     .content{
         background-color: #f9f9f9;
         padding: 50px;
+    }
+    .sub-nav{
+        list-style-type: none;
+        padding-left: 16px;
+    }
+    .sub-nav li{
+        text-align: center;
+        margin: 12px 0;
+    }
+    .sub-nav a{
+        padding-left: 5px;
+        text-decoration: none;
+    }
+    .sub-nav .active{
+        background-color: #337ab7;
+        border-radius: 4px;
+    }
+    .sub-nav .active a{
+        color: #fff;
     }
 </style>
 <script type="text/javascript">
