@@ -19,7 +19,7 @@
     <tbody>
         {% for g in guess %}
             <tr>
-                <td class="col-lg-1">{{g.id}}</td>
+                <td class="col-lg-1"><a href="/api/guess{{g.id}}.json" target="_blank">{{g.id}}</a></td>
                 <td class="col-lg-1"><b>{{g.title}}</b></td>
                 <td class="col-lg-3">
                     {% for index,c in enumerate(g.cols) %}

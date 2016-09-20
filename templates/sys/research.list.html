@@ -17,8 +17,8 @@
     <tbody>
         {% for r in research %}
             <tr>
-                <td class="col-lg-1">{{r.id}}</td>
-                <td class="col-lg-1">{{r.title}}</td>
+                <td class="col-lg-1"><a href="/api/research{{r.id}}.json" target="_blank">{{r.id}}</a></td>
+                <td class="col-lg-1"><b>{{r.title}}</b></td>
                 <td class="col-lg-3">
                     {% for index,c in enumerate(r.cols) %}
                         <button class="btn btn-xs btn-info">{{index+1}}</button> {{c}} <br><br>
