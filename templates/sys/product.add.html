@@ -72,12 +72,19 @@ $(document).ready(function (){
         }
         var img = new Image();
         img.onload = function () {
-            var imgdiv = '<img src="'+this.src+'" width="60" height="60" >';
+            var imgdiv = '<div class="img-div"><button class="btn btn-xs btn-default removebtn"><i class="glyphicon glyphicon-remove"></i></button> <img src="'+this.src+'" class="img-thumbnail" > </div>';
             $(".imgs").html($(".imgs").html()+imgdiv);
             $("#imgtext").val("");
             l++;
         };
         img.src = $("#imgtext").val();
+    });
+
+    $(".imgs").on("click", ".removebtn", function (e){
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).parent().remove();
+        l--;
     });
 
     $("#addproForm").submit(function (e){
@@ -110,9 +117,19 @@ $(document).ready(function (){
 });
 </script>
 <style>
-    .imgs img{
+    .img-div{
+        position: relative;
         margin: 20px;
         display: inline-block;
+    }
+    .img-div button{
+        position: absolute;
+        right: -20px;
+        top: -20px;
+    }
+    .img-div img{
+        width: 60px;
+        height: 60px;
     }
     .radio label{
         margin: 0 15px;

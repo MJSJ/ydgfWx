@@ -11,8 +11,13 @@ class GuessJsonHandler(api):
     yf: 根据id获取竞猜内容
     '''
     def get(self, id=0):
-        guess = self.db.guess(id=id).one()
+        guess = self.db.guess(id=id, state=1).one()
         if guess:
+            # 判断该竞猜是否过期
+            if (self.now - guess.create_time).days >= guess.expires:
+                self.db.guess(id=id).update(state=0)
+                self.write({'data': None})
+                return
             cols = guess['cols'].split('|')
             if len(cols) >= 1:
                 guess['cols'] = guess['cols'].split('|')
@@ -27,8 +32,13 @@ class ResearchJsonHandler(api):
     yf: 根据id获取调查内容
     '''
     def get(self, id=0):
-        research = self.db.research(id=id).one()
+        research = self.db.research(id=id, state=1).one()
         if research:
+            # 判断该调查是否过期
+            if (self.now - research.create_time).days >= research.expires:
+                self.db.research(id=id).update(state=0)
+                self.write({'data': None})
+                return
             cols = research['cols'].split('|')
             if len(cols) >= 1:
                 research['cols'] = research['cols'].split('|')
