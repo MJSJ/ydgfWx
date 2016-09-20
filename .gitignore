@@ -13,5 +13,5 @@ app/utils/db.py
 conf/nginx.conf
 conf/robots.txt
 app.py
-
+app/ydgf.mwb.bak
 node_modules/
