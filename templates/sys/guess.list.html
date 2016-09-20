@@ -4,35 +4,45 @@
 <table class="table table-condensed">
     <thead>
     <tr>
-        <td>ID</td>
-        <td>标题</td>
+        <td class="col-lg-1">ID</td>
+        <td class="col-lg-1">标题</td>
         <td class="col-lg-3">选项</td>
-        <td>答案</td>
-        <td>状态</td>
-        <td>创建时间</td>
-        <td>过期时间</td>
-        <td>奖励积分</td>
-        <td>参与积分</td>
-        <td>操作</td>
+        <td class="col-lg-1">答案</td>
+        <td class="col-lg-1">状态</td>
+        <td class="col-lg-1">创建时间</td>
+        <td class="col-lg-1">过期时间</td>
+        <td class="col-lg-1">奖励积分</td>
+        <td class="col-lg-1">参与积分</td>
+        <td class="col-lg-1">操作</td>
     </tr>
     </thead>
     <tbody>
         {% for g in guess %}
             <tr>
-                <td>{{g.id}}</td>
-                <td>{{g.title}}</td>
+                <td class="col-lg-1">{{g.id}}</td>
+                <td class="col-lg-1">{{g.title}}</td>
                 <td class="col-lg-3">
-                    {% for c in g.cols %}
-                       {{c}} <br><br>
+                    {% for index,c in enumerate(g.cols) %}
+                        <button class="btn btn-xs btn-info">{{index+1}}</button> {{c}} <br><br>
                     {% end %}
                 </td>
-                <td>{{g.key}}</td>
-                <td>{{g.state}}</td>
-                <td>{{g.create_time}}</td>
-                <td>{{g.expires}}</td>
-                <td>{{g.reward_score}}</td>
-                <td>{{g.score}}</td>
-                <td><a class="btn btn-xs btn-primary" href="/sys/guess/edit/{{g.id}}" target="_blank">编辑</a></td>
+                <td class="col-lg-1">
+                    第<b>{{g.key + 1}}</b>行
+                </td>
+                <td class="col-lg-1">
+                    {% if g.state == 0 %}
+                        <button class="btn btn-xs btn-warning">撤销</button>
+                    {% else %}
+                        <button class="btn btn-xs btn-success">已发布</button>
+                    {% end %}
+                </td>
+                <td class="col-lg-1">{{g.create_time}}</td>
+                <td class="col-lg-1">{{g.expires}}天</td>
+                <td class="col-lg-1">{{g.reward_score}}</td>
+                <td class="col-lg-1">{{g.score}}</td>
+                <td class="col-lg-1">
+                    <a class="btn btn-xs btn-primary" href="/sys/guess/edit/{{g.id}}" target="_blank">编辑</a>
+                </td>
             </tr>
         {% end %}
     </tbody>

@@ -4,31 +4,39 @@
 <table class="table table-condensed">
     <thead>
     <tr>
-        <td>ID</td>
-        <td>标题</td>
+        <td class="col-lg-1">ID</td>
+        <td class="col-lg-1">标题</td>
         <td class="col-lg-3">选项</td>
-        <td>状态</td>
-        <td>创建时间</td>
-        <td>过期时间</td>
-        <td>奖励积分</td>
-        <td>操作</td>
+        <td class="col-lg-1">状态</td>
+        <td class="col-lg-2">创建时间</td>
+        <td class="col-lg-2">过期时间</td>
+        <td class="col-lg-1">奖励积分</td>
+        <td class="col-lg-1">操作</td>
     </tr>
     </thead>
     <tbody>
         {% for r in research %}
             <tr>
-                <td>{{r.id}}</td>
-                <td>{{r.title}}</td>
+                <td class="col-lg-1">{{r.id}}</td>
+                <td class="col-lg-1">{{r.title}}</td>
                 <td class="col-lg-3">
-                    {% for c in r.cols %}
-                       {{c}} <br><br>
+                    {% for index,c in enumerate(r.cols) %}
+                        <button class="btn btn-xs btn-info">{{index+1}}</button> {{c}} <br><br>
                     {% end %}
                 </td>
-                <td>{{r.state}}</td>
-                <td>{{r.create_time}}</td>
-                <td>{{r.expires}}</td>
-                <td>{{r.reward_score}}</td>
-                <td><a class="btn btn-xs btn-primary" href="/sys/research/edit/{{r.id}}" target="_blank">编辑</a></td>
+                <td class="col-lg-1">
+                    {% if r.state == 0 %}
+                        <button class="btn btn-xs btn-warning">撤销</button>
+                    {% else %}
+                        <button class="btn btn-xs btn-success">已发布</button>
+                    {% end %}
+                </td>
+                <td class="col-lg-2">{{r.create_time}}</td>
+                <td class="col-lg-2">{{r.expires}}</td>
+                <td class="col-lg-1">{{r.reward_score}}</td>
+                <td class="col-lg-1">
+                    <a class="btn btn-xs btn-primary" href="/sys/research/edit/{{r.id}}" target="_blank">编辑</a>
+                </td>
             </tr>
         {% end %}
     </tbody>

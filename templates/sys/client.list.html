@@ -1,0 +1,42 @@
+{% extends "system.html" %}
+
+{% block content %}
+<table class="table table-condensed">
+    <thead>
+    <tr>
+        <td class="col-lg-1">ID</td>
+        <td class="col-lg-1">昵称</td>
+        <td class="col-lg-1">国籍</td>
+        <td class="col-lg-1">省份</td>
+        <td class="col-lg-1">市区</td>
+        <td class="col-lg-1">性别</td>
+        <td class="col-lg-1">积分</td>
+        <td class="col-lg-1">金币</td>
+        <td class="col-lg-1">操作</td>
+    </tr>
+    </thead>
+    <tbody>
+        {% for c in clients %}
+            <tr>
+                <td class="col-lg-1">{{c.id}}</td>
+                <td class="col-lg-1">{{c.nickname}}</td>
+                <td class="col-lg-1">{{c.country}}</td>
+                <td class="col-lg-1">{{c.province}}</td>
+                <td class="col-lg-1">{{c.city}}</td>
+                <td class="col-lg-1">
+                    {% if c.sex == 1 %}
+                        男
+                    {% else %}
+                        女
+                    {% end %}
+                </td>
+                <td class="col-lg-1">{{c.score}}</td>
+                <td class="col-lg-1">{{c.gold}}</td>
+                <td class="col-lg-1">
+                    <a class="btn btn-xs btn-primary" href="/sys/guess/edit" target="_blank">编辑</a>
+                </td>
+            </tr>
+        {% end %}
+    </tbody>
+</table>
+{% end %}

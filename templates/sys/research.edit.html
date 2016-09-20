@@ -5,7 +5,7 @@
     <form action="/sys/research/add" id="addresForm" method="post">
         <div class="form-group">
             <label>标题</label>
-            <input type="text" class="form-control" name="title" required value="{{research.id}}">
+            <input type="text" class="form-control" name="title" required value="{{research.title}}">
         </div>
         <div class="form-group">
             <label>选项</label>
@@ -39,17 +39,17 @@
             <div class="radio radiostate">
                 {% if research.state == 1 %}
                     <label class="radio-inline">
-                      <input type="radio" name="state" id="inlineRadio1" value="1" checked> 已发布
+                      <input type="radio" name="state" value="1" checked> 已发布
                     </label>
                     <label class="radio-inline">
-                      <input type="radio" name="state" id="inlineRadio2" value="0"> 撤销
+                      <input type="radio" name="state" value="0"> 撤销
                     </label>
                 {% else %}
                     <label class="radio-inline">
-                      <input type="radio" name="state" id="inlineRadio1" value="1"> 已发布
+                      <input type="radio" name="state" value="1"> 已发布
                     </label>
                     <label class="radio-inline">
-                      <input type="radio" name="state" id="inlineRadio2" value="0" checked> 撤销
+                      <input type="radio" name="state" value="0" checked> 撤销
                     </label>
                 {% end %}
             </div>
@@ -87,7 +87,7 @@ $(document).ready(function (){
         });
     });
 
-    $("#addgueForm").submit(function (e){
+    $("#addresForm").submit(function (e){
         var validl = $.validLength($("input[name=title]").val().length, 20) &&
                     $.validLength($("input[name=expires]").val().length, 2);
 

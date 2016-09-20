@@ -40,8 +40,8 @@ class GuessListHandler(sys):
     yf: 竞猜列表
     '''
     @tornado.web.authenticated
-    def get(self, p=0):
-        list = self.db.guess()[p: 10].object_list
+    def get(self, p=1):
+        list = self.db.guess().sort(create_time='DESC')[int(p): 10].object_list
         for item in list:
             item['cols'] = item['cols'].split('|')
         self.render('guess.list.html', guess=list, active="guess-list")
@@ -96,8 +96,8 @@ class ResearchListHandler(sys):
     yf: 调查列表
     '''
     @tornado.web.authenticated
-    def get(self, p=0):
-        list = self.db.research()[p: 10].object_list
+    def get(self, p=1):
+        list = self.db.research().sort(create_time='DESC')[p: 10].object_list
         for item in list:
             item['cols'] = item['cols'].split('|')
         self.render('research.list.html', research=list, active="research-list")
@@ -145,6 +145,15 @@ class ResearchEditHandler(sys):
             rs.cols = rs.cols.split("|")
         self.render('research.edit.html', research=rs, active=None)
 
+class ClientListHandler(sys):
+    '''
+    yf: 用户列表
+    '''
+    @tornado.web.authenticated
+    def get(self, p=1):
+        list = self.db.client()[p: 10].object_list
+        self.render('client.list.html', clients=list, active="client-list")
+
 class NotFoundHandler(sys):
     def get(self):
         self.write("Sorry, Page not Found.. Go <a href=\"/sys\">back</a>")
@@ -154,10 +163,14 @@ url_prefix = '/sys'
 urls = [
     ('/?', SystemHandler),
     ('/login', LoginHandler),
+    ('/guess/list-(?P<p>[\-\d]+)', GuessListHandler),
     ('/guess/list', GuessListHandler),
     ('/guess/add', GuessAddHandler),
     ('/guess/edit/(?P<id>\d+)/?', GuessEditHandler),
+    ('/research/list-(?P<p>[\-\d]+)', ResearchListHandler),
     ('/research/list', ResearchListHandler),
     ('/research/add', ResearchAddHandler),
-    ('/research/edit/(?P<id>\d+)/?', ResearchEditHandler)
+    ('/research/edit/(?P<id>\d+)/?', ResearchEditHandler),
+    ('/client/list-(?P<p>[\-\d]+)', ClientListHandler),
+    ('/client/list', ClientListHandler),
 ]
