@@ -1,0 +1,52 @@
+{% extends "system.html" %}
+
+{% block content %}
+<table class="table table-condensed">
+    <thead>
+    <tr>
+        <td class="col-lg-1">ID</td>
+        <td class="col-lg-2">联系电话</td>
+        <td class="col-lg-3">收货地址</td>
+        <td class="col-lg-1">客户</td>
+        <td class="col-lg-1">商品</td>
+        <td class="col-lg-1">状态</td>
+        <td class="col-lg-2">下单日期</td>
+        <td class="col-lg-1">操作</td>
+    </tr>
+    </thead>
+    <tbody>
+        {% for o in orders %}
+            <tr>
+                <td class="col-lg-1">{{o.id}}</td>
+                <td class="col-lg-2"><b>{{o.phone}}</b></td>
+                <td class="col-lg-3">{{p.address}}</td>
+                <td class="col-lg-1">{{p.client_id}}</td>
+                <td class="col-lg-1">{{p.product_id}}</td>
+                <td class="col-lg-1">
+                    {% if p.state == 1 %}
+                        <button class="btn btn-xs btn-warning">未发货</button>
+                    {% else %}
+                        <button class="btn btn-xs btn-success">已发货</button>
+                    {% end %}
+                </td>
+                <td class="col-lg-2">{{p.create_time}}</td>
+                <td class="col-lg-1">
+
+                </td>
+            </tr>
+        {% end %}
+    </tbody>
+</table>
+<div class="btn-group">
+    {% if prevpage is None or prevpage == False %}
+        <a href="/sys/product/list" class="btn btn-default" disabled="disabled">上一页</a>
+    {% else %}
+        <a href="/sys/product/list-{{prevpage}}" class="btn btn-default">上一页</a>
+    {% end %}
+    {% if nextpage is None or nextpage == False %}
+        <a href="/sys/product/list" class="btn btn-default" disabled="disabled">下一页</a>
+    {% else %}
+        <a href="/sys/product/list-{{nextpage}}" class="btn btn-default">下一页</a>
+    {% end %}
+</div>
+{% end %}

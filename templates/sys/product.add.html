@@ -1,0 +1,121 @@
+{% extends "system.html" %}
+
+{% block content %}
+<div class="col-md-6 col-md-offset-3">
+    <form action="/sys/product/add" id="addproForm" method="post">
+        <div class="form-group">
+            <label>商品名称</label>
+            <input type="text" class="form-control" name="name" required>
+        </div>
+        <div class="form-group">
+            <label>商品图片</label>
+            <div class="imgs"></div>
+            <input type="hidden" required name="imgs" id="imgsinput">
+            <div class="input-group">
+                <input type="text" class="form-control" id="imgtext" placeholder="请填入图片的地址">
+                <span class="input-group-btn">
+                    <button id="addPic" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>商品库存</label>
+            <div class="input-group">
+                <input type="number" class="form-control" name="num" value="0" required>
+                <span class="input-group-addon">件</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>积分兑换价</label>
+            <div class="input-group">
+                <input type="number" class="form-control" name="score" value="0" required>
+                <span class="input-group-addon">分</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>金币兑换价</label>
+            <div class="input-group">
+                <input type="number" class="form-control" name="gold" value="0" required>
+                <span class="input-group-addon">分</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>状态</label>
+            <div class="radio radiostate">
+                <label class="radio-inline">
+                  <input type="radio" name="state" id="inlineRadio1" value="1"> 已上架
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="state" id="inlineRadio2" value="0" checked> 下架
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-default">提交</button>
+        {% raw xsrf_form_html() %}
+    </form>
+</div>
+<script type="text/javascript">
+$(document).ready(function (){
+    var l = 0;
+    $("#addPic").on("click", function (e){
+        e.preventDefault();
+        e.stopPropagation();
+        var url = $("#imgtext").val();
+        l = $(".imgs img").length;
+        if( url.indexOf('http://') == -1 && url.indexOf('https://') == -1 ){
+            alert("url格式错误!");
+            return
+        }
+        if( l >= 4 ){
+            alert("图片个数超出限制");
+            return
+        }
+        var img = new Image();
+        img.onload = function () {
+            var imgdiv = '<img src="'+this.src+'" width="60" height="60" >';
+            $(".imgs").html($(".imgs").html()+imgdiv);
+            $("#imgtext").val("");
+            l++;
+        };
+        img.src = $("#imgtext").val();
+    });
+
+    $("#addproForm").submit(function (e){
+        if( l == 0 ){
+            alert("请添加商品图片");
+            return false;
+        }
+        var val = "";
+        $(".imgs img").each(function (i, item){
+            if(i == l-1){
+                val += $(this).attr("src");
+            }else{
+                val += $(this).attr("src") + "|";
+            }
+        });
+        $("#imgsinput").val(val);
+        $.ajax({
+            url: '/sys/product/add',
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function (r){
+                if(r.status == 1){
+                    alert("操作成功");
+                    window.location.href = "/sys/product/list"
+                }
+            }
+        });
+        return false;
+    });
+});
+</script>
+<style>
+    .imgs img{
+        margin: 20px;
+        display: inline-block;
+    }
+    .radio label{
+        margin: 0 15px;
+    }
+</style>
+{% end %}

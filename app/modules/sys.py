@@ -157,6 +157,67 @@ class ClientListHandler(sys):
         list = data.object_list
         self.render('client.list.html', clients=list, active="client-list", prevpage=data.prevpage, nextpage=data.nextpage)
 
+class ProductAddHandler(sys):
+    @tornado.web.authenticated
+    def get(self):
+        self.render('product.add.html', active='product-add')
+
+    def post(self):
+        dat = self.json_decode(self.request.body)
+        data = {
+            'name': dat['name'],
+            'imgs': dat['imgs'],
+            'num': dat['num'],
+            'score': dat['score'],
+            'gold': dat['gold'],
+            'state': dat['state']
+        }
+        if 'id' in dat:
+            data['id'] = dat['id']
+            self.db.product(id=dat['id']).update(**data)
+            self.write({'status': 1})
+            return
+        else:
+            newp = self.db.product.add(**data)
+            if newp:
+                self.write({'status': 1})
+                return
+        self.write({'status': 0})
+
+class ProductListHandler(sys):
+    '''
+    yf: 商品列表
+    '''
+    @tornado.web.authenticated
+    def get(self, p=1):
+        data = self.db.product().sort(state='DESC')[p: 10]
+        list = data.object_list
+        for item in list:
+            item['imgs'] = item['imgs'].split('|')
+        self.render('product.list.html', products=list, active="product-list", prevpage=data.prevpage, nextpage=data.nextpage)
+
+class ProductEditHandler(sys):
+    '''
+    yf: 商品编辑页
+    '''
+    @tornado.web.authenticated
+    def get(self, id=0):
+        p = self.db.product(id=id).one()
+        if p is None:
+            return
+        else:
+            p.imgs = p.imgs.split("|")
+        self.render('product.edit.html', product=p, active=None)
+
+class OrderListHandler(sys):
+    '''
+    yf: 订单列表
+    '''
+    def get(self, p=1):
+        data = self.db.order().sort(create_time='DESC')[p: 10]
+        list = data.object_list
+        self.render('order.list.html', orders=list, active='order-list', prevpage=data.prevpage, nextpage=data.nextpage)
+
 class NotFoundHandler(sys):
     def get(self):
         self.write("Sorry, Page not Found.. Go <a href=\"/sys\">back</a>")
@@ -176,4 +237,10 @@ urls = [
     ('/research/edit/(?P<id>\d+)/?', ResearchEditHandler),
     ('/client/list-(?P<p>[\-\d]+)', ClientListHandler),
     ('/client/list', ClientListHandler),
+    ('/product/add', ProductAddHandler),
+    ('/product/edit/(?P<id>\d+)/?', ProductEditHandler),
+    ('/product/list-(?P<p>[\-\d]+)', ProductListHandler),
+    ('/product/list', ProductListHandler),
+    ('/order/list', OrderListHandler),
+    ('/order/list-(?P<p>[\-\d]+)', OrderListHandler)
 ]

@@ -1,0 +1,64 @@
+{% extends "system.html" %}
+
+{% block content %}
+<table class="table table-condensed">
+    <thead>
+    <tr>
+        <td class="col-lg-1">图片</td>
+        <td class="col-lg-1">ID</td>
+        <td class="col-lg-3">名称</td>
+        <td class="col-lg-2">积分兑换价</td>
+        <td class="col-lg-2">金币兑换价</td>
+        <td class="col-lg-1">销量</td>
+        <td class="col-lg-1">库存</td>
+        <td class="col-lg-1">状态</td>
+        <td class="col-lg-1">操作</td>
+    </tr>
+    </thead>
+    <tbody>
+        {% for p in products %}
+            <tr>
+                <td class="col-lg-1">
+                    <img src="{{p.imgs[0]}}" alt="" width="60" height="60">
+                </td>
+                <td class="col-lg-1">{{p.id}}</td>
+                <td class="col-lg-3"><b>{{p.name}}</b></td>
+                <td class="col-lg-2">
+                    {{p.score}}
+                </td>
+                <td class="col-lg-2">
+                    {{p.gold}}
+                </td>
+                <td class="col-lg-1">
+                    {{p.sels}}件
+                </td>
+                <td class="col-lg-1">
+                    {{p.num}}件
+                </td>
+                <td class="col-lg-1">
+                    {% if p.state == 1 %}
+                        <button class="btn btn-xs btn-success">上架</button>
+                    {% else %}
+                        <button class="btn btn-xs btn-warning">下架</button>
+                    {% end %}
+                </td>
+                <td class="col-lg-1">
+                    <a class="btn btn-xs btn-primary" href="/sys/product/edit/{{p.id}}" target="_blank">编辑</a>
+                </td>
+            </tr>
+        {% end %}
+    </tbody>
+</table>
+<div class="btn-group">
+    {% if prevpage is None or prevpage == False %}
+        <a href="/sys/product/list" class="btn btn-default" disabled="disabled">上一页</a>
+    {% else %}
+        <a href="/sys/product/list-{{prevpage}}" class="btn btn-default">上一页</a>
+    {% end %}
+    {% if nextpage is None or nextpage == False %}
+        <a href="/sys/product/list" class="btn btn-default" disabled="disabled">下一页</a>
+    {% else %}
+        <a href="/sys/product/list-{{nextpage}}" class="btn btn-default">下一页</a>
+    {% end %}
+</div>
+{% end %}
