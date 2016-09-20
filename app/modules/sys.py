@@ -41,10 +41,11 @@ class GuessListHandler(sys):
     '''
     @tornado.web.authenticated
     def get(self, p=1):
-        list = self.db.guess().sort(create_time='DESC')[int(p): 10].object_list
+        data = self.db.guess().sort(create_time='DESC')[int(p): 10]
+        list = data.object_list
         for item in list:
             item['cols'] = item['cols'].split('|')
-        self.render('guess.list.html', guess=list, active="guess-list")
+        self.render('guess.list.html', guess=list, active="guess-list", prevpage=data.prevpage, nextpage=data.nextpage)
 
 class GuessAddHandler(sys):
     '''
@@ -97,10 +98,11 @@ class ResearchListHandler(sys):
     '''
     @tornado.web.authenticated
     def get(self, p=1):
-        list = self.db.research().sort(create_time='DESC')[p: 10].object_list
+        data = self.db.research().sort(create_time='DESC')[p: 10]
+        list = data.object_list
         for item in list:
             item['cols'] = item['cols'].split('|')
-        self.render('research.list.html', research=list, active="research-list")
+        self.render('research.list.html', research=list, active="research-list", prevpage=data.prevpage, nextpage=data.nextpage)
 
 class ResearchAddHandler(sys):
     '''
@@ -151,8 +153,9 @@ class ClientListHandler(sys):
     '''
     @tornado.web.authenticated
     def get(self, p=1):
-        list = self.db.client()[p: 10].object_list
-        self.render('client.list.html', clients=list, active="client-list")
+        data = self.db.client().sort(score='DESC')[p: 10]
+        list = data.object_list
+        self.render('client.list.html', clients=list, active="client-list", prevpage=data.prevpage, nextpage=data.nextpage)
 
 class NotFoundHandler(sys):
     def get(self):

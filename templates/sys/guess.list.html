@@ -20,7 +20,7 @@
         {% for g in guess %}
             <tr>
                 <td class="col-lg-1">{{g.id}}</td>
-                <td class="col-lg-1">{{g.title}}</td>
+                <td class="col-lg-1"><b>{{g.title}}</b></td>
                 <td class="col-lg-3">
                     {% for index,c in enumerate(g.cols) %}
                         <button class="btn btn-xs btn-info">{{index+1}}</button> {{c}} <br><br>
@@ -47,4 +47,16 @@
         {% end %}
     </tbody>
 </table>
+<div class="btn-group">
+    {% if prevpage is None or prevpage == False %}
+        <a href="/sys/guess/list" class="btn btn-default" disabled="disabled">上一页</a>
+    {% else %}
+        <a href="/sys/guess/list-{{prevpage}}" class="btn btn-default">上一页</a>
+    {% end %}
+    {% if nextpage is None or nextpage == False %}
+        <a href="/sys/guess/list" class="btn btn-default" disabled="disabled">下一页</a>
+    {% else %}
+        <a href="/sys/guess/list-{{nextpage}}" class="btn btn-default">下一页</a>
+    {% end %}
+</div>
 {% end %}

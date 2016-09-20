@@ -88,7 +88,7 @@ $(document).ready(function (){
     });
 
     $("#addresForm").submit(function (e){
-        var validl = $.validLength($("input[name=title]").val().length, 20) &&
+        var validl = $.validLength($("input[name=title]").val().length, 50) &&
                     $.validLength($("input[name=expires]").val().length, 2);
 
         var _cols = "";

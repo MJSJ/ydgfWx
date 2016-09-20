@@ -41,4 +41,16 @@
         {% end %}
     </tbody>
 </table>
+<div class="btn-group">
+    {% if prevpage is None or prevpage == False %}
+        <a href="/sys/guess/list" class="btn btn-default" disabled="disabled">上一页</a>
+    {% else %}
+        <a href="/sys/guess/list-{{prevpage}}" class="btn btn-default">上一页</a>
+    {% end %}
+    {% if nextpage is None or nextpage == False %}
+        <a href="/sys/guess/list" class="btn btn-default" disabled="disabled">下一页</a>
+    {% else %}
+        <a href="/sys/guess/list-{{nextpage}}" class="btn btn-default">下一页</a>
+    {% end %}
+</div>
 {% end %}
