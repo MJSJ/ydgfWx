@@ -41,7 +41,10 @@
                 <td class="col-lg-1">{{g.reward_score}}</td>
                 <td class="col-lg-1">{{g.score}}</td>
                 <td class="col-lg-1">
-                    <a class="btn btn-xs btn-primary" href="/sys/guess/edit/{{g.id}}" target="_blank">编辑</a>
+                    <div class="btn-group-vertical">
+                        <a class="btn btn-xs btn-primary" href="/sys/guess/edit/{{g.id}}" target="_blank">编辑</a>
+                        <a class="btn btn-xs btn-warning" data-toggle="modal" href="#" target="_blank" data-target="#liquidation">清算</a>
+                    </div>
                 </td>
             </tr>
         {% end %}
@@ -58,5 +61,23 @@
     {% else %}
         <a href="/sys/guess/list-{{nextpage}}" class="btn btn-default">下一页</a>
     {% end %}
+</div>
+<!-- liquidation -->
+<div class="modal" id="liquidation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">清算结果</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
 {% end %}
